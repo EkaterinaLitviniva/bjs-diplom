@@ -23,7 +23,9 @@ logoutButton.action = () =>
     }    
   });
 
-  setInterval(exchangeRatesTable(), 60000);
+  ratesRequest();
+
+  setInterval(ratesRequest, 60000);
 
   const money = new MoneyManager();
 
@@ -33,7 +35,7 @@ money.addMoneyCallback = (data) => {
             ProfileWidget.showProfile(response.data);
             money.setMessage(false, 'Пополнение выполнено');
         } else {
-            money.setMessage(true, 'Невозможно перевести!');
+            money.setMessage(true, response.data);
         };
     });
 };
@@ -44,7 +46,7 @@ money.conversionMoneyCallback = (data) => {
             ProfileWidget.showProfile(response.data);
             money.setMessage(false, 'Конвертирование выполнено');
         } else {
-            money.setMessage(true, `Невозможно конвертировать`);
+            money.setMessage(true, response.data);
         };
     });
 };
@@ -78,7 +80,7 @@ person.addUserCallback = (data) => {
             money.updateUsersList(response.data);
             person.setMessage(false, 'Пользователь успешно добавлен в адресную книгу');
         } else {
-            person.setMessage(true, 'Пользователь не может быть добавлен');
+            person.setMessage(true, response.data);
         };
     });
 };
@@ -91,7 +93,7 @@ person.removeUserCallback = (data) => {
             money.updateUsersList(response.data);
             person.setMessage(false, 'Пользователь успешно удален'); 
         } else {
-            person.setMessage(true, 'Невозможно удалить пользователя');
+            person.setMessage(true, response.data);
         };
     });
 };
